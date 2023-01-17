@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  valheim_server:
+    image: valheim-server
+    build:
+      context: .
+    container_name: valheim-server
+    ports:
+      - "2345-2348:2345-2348/udp"
+    restart: unless-stopped
+    env_file:
+      - ./valheim.env
+    volumes:
+      - data:/home/valheim/.config/unity3d/IronGate/Valheim
+
+volumes:
+  data:
+    name: valheim_server_data

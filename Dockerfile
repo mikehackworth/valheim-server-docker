@@ -1,14 +1,4 @@
-ARG PARENT_IMAGE=debian:11.6-slim
-FROM ${PARENT_IMAGE} as steamcmd
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    software-properties-common && \
-    dpkg --add-architecture i386
-RUN apt-get install -y --no-install-recommends \
-    lib32gcc-s1 \
-    steamcmd
-
-FROM steamcmd as build
+FROM steamcmd/steamcmd as build
 RUN steamcmd \
     +@sSteamCmdForcePlatformType linux \
     +force_install_dir /valheim-server \
@@ -16,3 +6,24 @@ RUN steamcmd \
     +app_update 896660 validate \
     +quit
 
+FROM debian:11.6-slim
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    # unity TLS dep
+    ca-certificates \
+    # crossplay deps
+    libatomic1 \
+    libc6 \
+    libpulse-dev \
+    && rm -rf /var/lib/apt/lists/*
+RUN useradd --create-home valheim
+COPY --from=build /valheim-server /home/valheim/valheim-server
+WORKDIR /home/valheim/valheim-server
+USER valheim
+RUN mkdir -p ~/.config/unity3d/IronGate/Valheim
+# use SIGINT (ctrl-c) to stop gracefully
+STOPSIGNAL SIGINT
+CMD exec ./valheim_server.x86_64 \
+    -name ${SERVER_NAME} \
+    -password ${SERVER_PASSWORD} \
+    -world ${WORLD_NAME} \
+    -crossplay
