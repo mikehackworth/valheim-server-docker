@@ -16,8 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpulse-dev \
     && rm -rf /var/lib/apt/lists/*
 RUN useradd --create-home valheim
-COPY --from=0 /valheim-server /home/valheim/valheim-server
-WORKDIR /home/valheim/valheim-server
+COPY --from=0 /valheim-server /home/valheim/server
+WORKDIR /home/valheim/server
 USER valheim
 RUN mkdir -p ~/.config/unity3d/IronGate/Valheim
 # use SIGINT (ctrl-c) to stop gracefully

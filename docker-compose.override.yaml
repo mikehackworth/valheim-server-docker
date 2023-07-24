@@ -1,4 +1,4 @@
 services:
   valheim_server:
     volumes:
-    - ./libsteam_api.so:/home/valheim/valheim-server/valheim_server_Data/Plugins/libsteam_api.so:ro 
+    - ./libsteam_api.so:/home/valheim/server/valheim_server_Data/Plugins/libsteam_api.so:ro 
