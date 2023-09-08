@@ -2,9 +2,7 @@ version: "3.9"
 
 services:
   valheim_server:
-    image: valheim/server
-    build:
-      context: .
+    image: 924974297862.dkr.ecr.eu-west-2.amazonaws.com/valheim/server:0.217.14
     container_name: valheim-server
     ports:
       - "2345-2348:2345-2348/udp"
