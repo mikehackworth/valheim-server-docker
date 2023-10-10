@@ -28,4 +28,5 @@ ENTRYPOINT exec ./valheim_server.x86_64 \
     -name ${SERVER_NAME} \
     -password ${SERVER_PASSWORD} \
     -world ${WORLD_NAME} \
-    -crossplay
+    -port ${SERVER_PORT} \
+    ${SERVER_OPTIONS}

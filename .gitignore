@@ -1,3 +1,2 @@
 docker-compose.override.yaml
-libsteam_api.so
 valheim.env
